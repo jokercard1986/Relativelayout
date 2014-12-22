@@ -3,6 +3,8 @@ package com.example.relativelayout;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
+import com.parse.PushService;
 import com.parse.SaveCallback;
 
 import android.app.Activity;
@@ -53,6 +55,8 @@ public class MainActivity extends Activity {
 		// Enable Local Datastore.
 		Parse.enableLocalDatastore(this); 
 		Parse.initialize(this, "0zldynKwX596Vc5QGlJyPEXYFDngu9SPSpTlxYBY", "nXbMqOheBHzMEdmO532cmcd0lzBzE3BzRrELpGXJ");
+		PushService.setDefaultPushCallback(this, MainActivity.class);
+		ParsePush.subscribeInBackground("all");
 		
 		ParseObject testObject = new ParseObject("TestObject");
 		testObject.put("name", "Hsu");
@@ -113,6 +117,11 @@ public class MainActivity extends Activity {
 		if (checkBox.isChecked() || text.contains("fuck")) {
 			text = "*******";
 		}
+		
+		ParsePush push = new ParsePush();
+		push.setChannel("all");
+		push.setMessage(text);
+		push.sendInBackground();
 		
 		ParseObject messageObject = new ParseObject("Message");
 		messageObject.put("text", text);
