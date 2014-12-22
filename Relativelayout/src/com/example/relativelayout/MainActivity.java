@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 		Parse.initialize(this, "0zldynKwX596Vc5QGlJyPEXYFDngu9SPSpTlxYBY", "nXbMqOheBHzMEdmO532cmcd0lzBzE3BzRrELpGXJ");
 		
 		ParseObject testObject = new ParseObject("TestObject");
-		testObject.put("foo", "bar");
+		testObject.put("name", "Hsu");
 		testObject.saveInBackground();
 		
 		setContentView(R.layout.activity_main);
@@ -111,6 +111,11 @@ public class MainActivity extends Activity {
 		if (checkBox.isChecked() || text.contains("fuck")) {
 			text = "*******";
 		}
+		
+		ParseObject messageObject = new ParseObject("Message");
+		messageObject.put("text", text);
+		messageObject.put("checkbox", checkBox.isChecked());
+		messageObject.saveInBackground();
 		
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 		editText.setText("");
