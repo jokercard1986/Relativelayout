@@ -1,7 +1,9 @@
 package com.example.relativelayout;
 
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import android.app.Activity;
 import android.content.Context;
@@ -116,6 +118,8 @@ public class MainActivity extends Activity {
 		messageObject.put("text", text);
 		messageObject.put("checkbox", checkBox.isChecked());
 		messageObject.saveInBackground();
+			
+
 		
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 		editText.setText("");
