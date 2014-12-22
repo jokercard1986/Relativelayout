@@ -1,5 +1,8 @@
 package com.example.relativelayout;
 
+import com.parse.Parse;
+import com.parse.ParseObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -39,9 +42,20 @@ public class MainActivity extends Activity {
 	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// Enable Local Datastore.
+		Parse.enableLocalDatastore(this); 
+		Parse.initialize(this, "0zldynKwX596Vc5QGlJyPEXYFDngu9SPSpTlxYBY", "nXbMqOheBHzMEdmO532cmcd0lzBzE3BzRrELpGXJ");
+		
+		ParseObject testObject = new ParseObject("TestObject");
+		testObject.put("foo", "bar");
+		testObject.saveInBackground();
+		
 		setContentView(R.layout.activity_main);
 
 		sp = getSharedPreferences("settings", Context.MODE_PRIVATE);
