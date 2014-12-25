@@ -50,7 +50,7 @@ public class MessageActivity extends Activity {
 		
 		deleteReceiver = new DeleteReceiver();
 		registerReceiver(deleteReceiver, new IntentFilter(
-				"com.example.simpleui.delete"));
+				"com.example.relativelayout.delete"));
 
 		listView = (ListView) findViewById(R.id.listView1);
 		String text = getIntent().getStringExtra("text");
@@ -201,10 +201,23 @@ public class MessageActivity extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 
-			Toast.makeText(context,
-					"delete successfully [from DeleteReceiver inner]",
-					Toast.LENGTH_SHORT).show();
-			queryDataFromParse();
+			String action = intent.getAction();
+
+			if (action.equals("com.example.relativelayout.delete")) {
+
+				String deleteMessage = intent.getStringExtra("deleteMessage");
+
+				Toast.makeText(
+						context,
+						"delete successfully. data:" + deleteMessage
+								+ "[from DeleteReceiver inner]",
+						Toast.LENGTH_SHORT).show();
+				queryDataFromParse();
+			} else if (action.equals("com.example.relativelayout.add")) {
+				Toast.makeText(context, "new data [from DeleteReceiver inner]",
+						Toast.LENGTH_SHORT).show();
+				queryDataFromParse();
+			}
 		}
 	}
 }
