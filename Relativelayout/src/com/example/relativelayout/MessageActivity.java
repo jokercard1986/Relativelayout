@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,12 +40,17 @@ public class MessageActivity extends Activity {
 	private static final String FILE_NAME = "history.txt";
 	private ListView listView;
 	private List<ParseObject> messages;
+	private DeleteReceiver deleteReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.message);
+		
+		deleteReceiver = new DeleteReceiver();
+		registerReceiver(deleteReceiver, new IntentFilter(
+				"com.example.simpleui.delete"));
 
 		listView = (ListView) findViewById(R.id.listView1);
 		String text = getIntent().getStringExtra("text");
@@ -77,6 +83,12 @@ public class MessageActivity extends Activity {
 			}
 		});
 
+	}
+	
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(deleteReceiver);
+		super.onDestroy();
 	}
 
 	private void queryDataFromParse() {
